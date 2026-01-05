@@ -1,0 +1,30 @@
+name: HTML Deployment Pipeline  # Pipeline ka naam
+
+on:
+  push:
+    branches: ["main"]         # Trigger: Jab bhi 'main' branch me push ho
+
+jobs:
+  build-and-deploy:            # Job ka naam
+    runs-on: ubuntu-latest     # Environment: Ek naya Linux server (Ubuntu)
+    
+    steps:
+      # Step 1: Checkout (Pull the code)
+      - name: Copying code from Repo
+        uses: actions/checkout@v4
+        # Explanation: This tells GitHub to copy your HTML files from the 
+        # repository into the temporary Linux server to process them.
+
+      # Step 2: Upload Artifact (Prepare for Web)
+      - name: Uploading files to GitHub Server
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' 
+        # Explanation: This step takes your files (like index.html) and 
+        # packages them into a format that a web server can read.
+
+      # Step 3: Deploy (The actual Launch)
+      - name: Deploying Live
+        uses: actions/deploy-pages@v4
+        # Explanation: This is the final step. It takes the package from 
+        # the previous step and publishes it on the internet.
