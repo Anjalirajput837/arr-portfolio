@@ -1,0 +1,31 @@
+name: Tech-Website-CI-CD
+
+on:
+  push:
+    branches: ["main"] # Jab bhi main branch me push ho, pipeline chalegi
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        # English: Copies your code into the runner (virtual machine).
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+        # English: Configures the hosting environment.
+
+      - name: Upload Files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # English: Bundles all files in the current folder.
+
+      - name: Deploy Live
+        uses: actions/deploy-pages@v4
+        # English: Publishes your website to the public URL.
